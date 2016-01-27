@@ -1,33 +1,17 @@
 <?php
 
-//require __DIR__ . '/vendor/autoload.php';
-
-//use DigitalOceanV2\Adapter\GuzzleAdapter;
-//use DigitalOceanV2\DigitalOceanV2;
-
-//include_once 'config.php';
-
-// create an adapter with DigitalOcean access token
-// and initialize DigitalOceanV2 API object
-//$adapter = new GuzzleAdapter($apikey);
-//$digitalocean = new DigitalOceanV2($adapter);
-//
-//$userInfo = $digitalocean->account()->getUserInformation();
-//
-// Get all available images
-//$allImages = $digitalocean->image()->getAll(['type' => 'snapshot', 'private' => true]);
 $images = array();
 foreach($allImages as $image) {
   if (strpos($image->name, 'servman-') === 0) {
     array_push($images, $image);
   }
 }
-//
-// Get all manageabe running droplets
-//$allDroplets = $digitalocean->droplet()->getAll();
+
 $droplets = array();
 foreach($allDroplets as $droplet) {
-  array_push($droplets, $droplet);
+  if (strpos($droplet->name, 'servman-') === 0) {
+    array_push($droplets, $droplet);
+  }
 }
 
 
@@ -66,7 +50,9 @@ foreach($allDroplets as $droplet) {
                 <td>{{ $image->id }}</td>
                 <td>{{ str_replace('servman-', '', $image->name) }}</td>
                 <td>{{ $image->createdAt }}</td>
-                <td><a class="btn btn-success" href="#" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
+                <td><a class="btn btn-success" href="{{ route("server.start", $image->id) }}" role="button">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </a></td>
               </tr>
               @endforeach
             </tbody>
@@ -97,8 +83,8 @@ foreach($allDroplets as $droplet) {
                 <td>{{ $droplet->status }}</td>
                 <td>{{ $droplet->createdAt }}</td>
                 <td>
-                  <a class="btn btn-warning" href="#" role="button">Restart</a>
-                  <a class="btn btn-danger" href="#" role="button">Destroy</a>
+                  <a class="btn btn-warning" href="{{ route("server.restart", $droplet->id) }}" role="button">Restart</a>
+                  <a class="btn btn-danger delete" href="{{ route("server.destroy", $droplet->id) }}" role="button">Destroy</a>
                 </td>
               </tr>
               @endforeach

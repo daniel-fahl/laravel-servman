@@ -10,30 +10,17 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::group(['middleware' => 'auth.basic'], function () {
 
-Route::get('/', function () {
-    $allImages = DigitalOcean::image()
-      ->getAll(['type' => 'snapshot', 'private' => true]);
-    $allDroplets = DigitalOcean::droplet()->getAll();
+    Route::get('/', ['as' => 'home', 'uses' => 'ServerController@index']);
 
-    return view('servman', [
-        'allImages' => $allImages,
-        'allDroplets' => $allDroplets
-    ]);
+    Route::get('/server/start/{imageid}', ["as" => "server.start", "uses" => "ServerController@start"]);
+
+    Route::get('/server/{id}/restart', ["as" => "server.restart", "uses" => "ServerController@restart"]);
+
+    Route::get('/server/{id}/destroy', ["as" => "server.destroy", "uses" => "ServerController@destroy"]);
+
 });
-
-Route::post('/server/init', function() {
-    // create new droplet
-});
-
-Route::get('/server/{id}/reboot', function($id) {
-    // reboot droplet
-});
-
-Route::delete('/server/{id}', function($id) {
-    // destroy droplet
-});
-
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +45,4 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 });
+
