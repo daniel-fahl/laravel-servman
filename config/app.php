@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     /*
     |--------------------------------------------------------------------------
@@ -155,8 +155,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        'GrahamCampbell\DigitalOcean\DigitalOceanServiceProvider'
-
+        'GrahamCampbell\DigitalOcean\DigitalOceanServiceProvider',
+        'Laracasts\Flash\FlashServiceProvider'
     ],
 
     /*
@@ -202,7 +202,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'DigitalOcean' => 'GrahamCampbell\DigitalOcean\Facades\DigitalOcean'
+        'DigitalOcean' => 'GrahamCampbell\DigitalOcean\Facades\DigitalOcean',
+        'Flash'     => 'Laracasts\Flash\Flash'
 
     ],
 

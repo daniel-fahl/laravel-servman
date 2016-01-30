@@ -1,23 +1,3 @@
-<?php
-
-$images = array();
-foreach($allImages as $image) {
-  if (strpos($image->name, 'servman-') === 0) {
-    array_push($images, $image);
-  }
-}
-
-$droplets = array();
-foreach($allDroplets as $droplet) {
-  if (strpos($droplet->name, 'servman-') === 0) {
-    array_push($droplets, $droplet);
-  }
-}
-
-
-
-?>
-
 @extends('layouts.app')
 
 @section('content')
@@ -32,6 +12,9 @@ foreach($allDroplets as $droplet) {
     </div>
 
     <div class="container">
+      <div class="flash-message">
+        @include('flash::message')
+      </div>
       <div class="row">
         <div class="col-md-12">
           <h3>Images</h3>
@@ -45,16 +28,23 @@ foreach($allDroplets as $droplet) {
               </tr>
             </thead>
             <tbody>
-              @foreach ($images as $image)
-              <tr>
-                <td>{{ $image->id }}</td>
-                <td>{{ str_replace('servman-', '', $image->name) }}</td>
-                <td>{{ $image->createdAt }}</td>
-                <td><a class="btn btn-success" href="{{ route("server.start", $image->id) }}" role="button">
-                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </a></td>
-              </tr>
-              @endforeach
+              @if (empty($images))
+                <tr>
+                  <td colspan="6">
+                    <p style="text-align: center;">No images available.</p>
+                  </td>
+              @else
+                @foreach ($images as $image)
+                <tr>
+                  <td>{{ $image->id }}</td>
+                  <td>{{ str_replace('servman-', '', $image->name) }}</td>
+                  <td>{{ $image->createdAt }}</td>
+                  <td><a class="btn btn-success" href="{{ route("server.start", $image->id) }}" role="button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </a></td>
+                </tr>
+                @endforeach
+              @endif
             </tbody>
           </table>
         </div>
@@ -75,6 +65,12 @@ foreach($allDroplets as $droplet) {
               </tr>
             </thead>
             <tbody>
+            @if (empty($droplets))
+              <tr>
+                <td colspan="6">
+                  <p style="text-align: center;">No servers are available.</p>
+                </td>
+            @else
               @foreach ($droplets as $droplet)
               <tr>
                 <td>{{ $droplet->id }}</td>
@@ -88,6 +84,7 @@ foreach($allDroplets as $droplet) {
                 </td>
               </tr>
               @endforeach
+            @endif
             </tbody>
           </table>
         </div>
