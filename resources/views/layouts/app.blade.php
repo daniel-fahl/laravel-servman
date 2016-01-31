@@ -6,9 +6,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>servman - Manage GodmodeX.de Servers</title>
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome - ServMan by GodmodeX Germany</title>
+    <meta name="description" content="">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -39,11 +39,10 @@
           <a class="navbar-brand" href="#">ServMan</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="#">You are using the account <!--?=$userInfo->email?--></a>
-            </li>
-          </ul>
+          <form name="logout" class="navbar-form pull-right" method="get" action="{{route("auth.logout")}}">
+            <span style="color: #eee; margin-right: 10px;">Welcome, {{ $name or 'Guest' }}!</span>
+            <button type="submit" class="btn btn-primary">Logout</button>
+          </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>

@@ -1,28 +1,30 @@
-<form method="POST" action="/auth/register">
-    {!! csrf_field() !!}
+@extends ('layouts.app')
 
-    <div>
-        Name
-        <input type="text" name="name" value="{{ old('name') }}">
-    </div>
+@section ('content')
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
-    </div>
+    <div class="container">
 
-    <div>
-        Password
-        <input type="password" name="password">
-    </div>
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" value="{{ old('email') }}" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
 
-    <div>
-        Confirm Password
-        <input type="password" name="password_confirmation">
-    </div>
+      <hr>
 
-    <div>
-        <button type="submit">Register</button>
-    </div>
-</form>
+      <footer>
+        <p>&copy; <a href="http://godmodex.de/">GodmodeX Germany</a></p>
+      </footer>
 
+    </div> <!-- /container -->
+
+
+@endsection
