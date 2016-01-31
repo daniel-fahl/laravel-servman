@@ -39,7 +39,7 @@
           <a class="navbar-brand" href="#">ServMan</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form name="logout" class="navbar-form pull-right" method="get" action="{{route("auth.logout")}}">
+          <form name="logout" class="navbar-form pull-right" method="get" action="#">
             <span style="color: #eee; margin-right: 10px;">Welcome, {{ $name or 'Guest' }}!</span>
             <button type="submit" class="btn btn-primary">Logout</button>
           </form>
