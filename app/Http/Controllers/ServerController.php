@@ -21,6 +21,10 @@ class ServerController extends Controller
      */
     public function index(Request $request) {
 
+        $params = array();
+        if(Auth::check()) {
+            $params['username'] = Auth::user()->name;
+        }
         $allImages = array();
         $allDroplets = array();
         try {
@@ -44,10 +48,11 @@ class ServerController extends Controller
           }
         }
 
-        return view('servman', [
-            'images' => $images,
-            'droplets' => $droplets
-          ]);
+        $params['images'] = $images;
+        $params['droplets'] = $droplets;
+
+
+        return view('servman', $params);
     }
 
     /**
