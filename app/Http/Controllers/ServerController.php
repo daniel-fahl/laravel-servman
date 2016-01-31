@@ -72,6 +72,7 @@ class ServerController extends Controller
         } catch(\Exception $e) {
             Flash::error('Error retrieving image from ID ' . $imageID . ': ' . $e->getMessage());
             Log::error('Error retrieving image from ID ' . $imageID . ': ' . $e->getMessage());
+            return redirect()->back();
         }
 
         // Create new droplet from image
@@ -80,6 +81,7 @@ class ServerController extends Controller
         } catch(\Exception $e) {
             Flash::error('Error creating droplet: ' . $e->getMessage());
             Log::error('Error creating droplet: ' . $e->getMessage());
+            return redirect()->back();
         }
 
         $message = 'Successfully initiated creation of server '
