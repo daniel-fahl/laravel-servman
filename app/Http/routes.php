@@ -14,11 +14,14 @@ Route::group(['middleware' => ['auth.basic', 'web']], function () {
 
     Route::get('/', ['as' => 'home', 'uses' => 'ServerController@index']);
 
-    Route::get('/server/start/{imageid}', ["as" => "server.start", "uses" => "ServerController@start"]);
+    Route::get('server/start/{imageid}', ["as" => "server.start", "uses" => "ServerController@start"]);
 
-    Route::get('/server/{id}/restart', ["as" => "server.restart", "uses" => "ServerController@restart"]);
+    Route::get('server/{id}/restart', ["as" => "server.restart", "uses" => "ServerController@restart"]);
 
-    Route::get('/server/{id}/destroy', ["as" => "server.destroy", "uses" => "ServerController@destroy"]);
+    Route::get('server/{id}/destroy', ["as" => "server.destroy", "uses" => "ServerController@destroy"]);
+
+    Route::get('register', ["as" => "register", "uses" => "Auth\AuthController@getRegister"]);
+    Route::post('register', ["as" => "register", "uses" => "Auth\AuthController@postRegister"]);
 
 });
 
