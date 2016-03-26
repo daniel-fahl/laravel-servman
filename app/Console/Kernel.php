@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('servman:destroyall')->dailyAt('05:00');
+        $filepath = 'storage/logs/cron.log';
+        $schedule->command('servman:destroyall')->dailyAt('05:00')->appendOutputTo($filepath);
     }
 }

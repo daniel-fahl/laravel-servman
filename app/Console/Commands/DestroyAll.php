@@ -39,12 +39,14 @@ class DestroyAll extends Command
      */
     public function handle()
     {
+        date_default_timezone_set('CET');
+        $now = date('Y-m-d H:i:s');
         // get all droplets from account
         $allDroplets = array();
         try {
             $allDroplets = DigitalOcean::droplet()->getAll();
         } catch (Exception $e) {
-            $this->error('Error fetching droplets: ' . $e->getMessage());
+            $this->error($now . 'Error fetching droplets: ' . $e->getMessage());
         }
 
         // delete droplets prefixed with "servman-"
@@ -55,9 +57,9 @@ class DestroyAll extends Command
                 // Destroy droplet by $dropletId
                 try {
                     DigitalOcean::droplet()->delete($id);
-                    $this->info('Destroying droplet ' . $id);
+                    $this->info($now . 'Destroying droplet ' . $id);
                 } catch (Exception $e) {
-                    $this->error('Error destroying droplet ' . $id . ': ' . $e->getMessage());
+                    $this->error($now . 'Error destroying droplet ' . $id . ': ' . $e->getMessage());
                 }
 
             }
