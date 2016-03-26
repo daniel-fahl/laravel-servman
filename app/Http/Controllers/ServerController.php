@@ -19,10 +19,11 @@ class ServerController extends Controller
      * those prefixed with $prefix
      * @return index view
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
 
         $params = array();
-        if(Auth::check()) {
+        if (Auth::check()) {
             $params['username'] = Auth::user()->name;
         }
         $allImages = array();
@@ -30,22 +31,22 @@ class ServerController extends Controller
         try {
             $allImages = DigitalOcean::image()->getAll(['type' => 'snapshot', 'private' => true]);
             $allDroplets = DigitalOcean::droplet()->getAll();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Flash::error('Error: ' . $e->getMessage());
         }
 
         $images = array();
-        foreach($allImages as $image) {
-          if (strpos($image->name, 'servman-') === 0) {
-            array_push($images, $image);
-          }
+        foreach ($allImages as $image) {
+            if (strpos($image->name, 'servman-') === 0) {
+                array_push($images, $image);
+            }
         }
 
         $droplets = array();
-        foreach($allDroplets as $droplet) {
-          if (strpos($droplet->name, 'servman-') === 0) {
-            array_push($droplets, $droplet);
-          }
+        foreach ($allDroplets as $droplet) {
+            if (strpos($droplet->name, 'servman-') === 0) {
+                array_push($droplets, $droplet);
+            }
         }
 
         $params['images'] = $images;
@@ -60,7 +61,8 @@ class ServerController extends Controller
      * @param $imageID The ID of the image
      * @return previous view
      */
-    public function start($imageID) {
+    public function start($imageID)
+    {
         // Logging action
         $user = Auth::user();
         Log::info('User ' . $user->name . ' initiated droplet creation '
@@ -69,7 +71,7 @@ class ServerController extends Controller
         // Retrieve image from $imageID
         try {
             $image = DigitalOcean::image()->getById($imageID);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Flash::error('Error retrieving image from ID ' . $imageID . ': ' . $e->getMessage());
             Log::error('Error retrieving image from ID ' . $imageID . ': ' . $e->getMessage());
             return redirect()->back();
@@ -78,7 +80,7 @@ class ServerController extends Controller
         // Create new droplet from image
         try {
             $droplet = DigitalOcean::droplet()->create($image->name, 'fra1', '1gb', $image->id);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Flash::error('Error creating droplet: ' . $e->getMessage());
             Log::error('Error creating droplet: ' . $e->getMessage());
             return redirect()->back();
@@ -88,7 +90,7 @@ class ServerController extends Controller
             . $droplet->id . ' from image ' . $image->name . ".\n"
             . 'Please wait for the server status to switch from "new" '
             . 'to "active".';
-        Flash::success( $message );
+        Flash::success($message);
         return redirect()->back();
     }
 
@@ -97,7 +99,8 @@ class ServerController extends Controller
      * @param $dropletId The Droplets ID
      * @return previous view
      */
-    public function restart($dropletId) {
+    public function restart($dropletId)
+    {
 
         // Logging action
         $user = Auth::user();
@@ -110,8 +113,8 @@ class ServerController extends Controller
             $message = 'Initiated reboot of server ' . $droplet->name . '('
                 . $droplet->id . '). Please wait for the status to switch back '
                 . 'to "active".';
-            Flash::success( $message );
-        } catch(\Exception $e) {
+            Flash::success($message);
+        } catch (\Exception $e) {
             Flash::error('Error rebooting server ' . $dropletId . ': ' . $e->getMessage());
             Log::error('Error rebooting droplet ' . $dropletId . ': ' . $e->getMessage());
         }
@@ -124,7 +127,8 @@ class ServerController extends Controller
      * @param $dropletId The Droplets ID
      * @return previous view
      */
-    public function destroy($dropletId) {
+    public function destroy($dropletId)
+    {
 
         // Logging action
         $user = Auth::user();
@@ -135,8 +139,8 @@ class ServerController extends Controller
             $droplet = DigitalOcean::droplet()->delete($dropletId);
             $message = 'Initiated destroy of server with ID ' . $dropletId
                 . '. Please wait a few moments until the server is destroyed.';
-            Flash::success( $message );
-        } catch(\Exception $e) {
+            Flash::success($message);
+        } catch (\Exception $e) {
             Flash::error('Error destroying server ' . $dropletId . ': ' . $e->getMessage());
             Log::error('Error destroying droplet ' . $dropletId . ': ' . $e->getMessage());
         }

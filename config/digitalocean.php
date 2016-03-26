@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'default' => 'main',
+    'default' => 'buzz',
 
     /*
     |--------------------------------------------------------------------------
@@ -38,19 +38,19 @@ return [
 
     'connections' => [
 
-        'main' => [
+        'guzzlehttp' => [
             'driver'  => 'guzzlehttp',
             'token'   => '89ce7818d8f450c844d41e72f8b9be321a7d6d8401ddffb96aaad684ab3d6bda',
         ],
 
-        'other' => [
+        'guzzle' => [
             'driver'  => 'guzzle',
-            'token'   => 'your-token',
+            'token' => '89ce7818d8f450c844d41e72f8b9be321a7d6d8401ddffb96aaad684ab3d6bda',
         ],
 
-        'alternative' => [
+        'buzz' => [
             'driver'  => 'buzz',
-            'token'   => 'your-token',
+            'token' => '89ce7818d8f450c844d41e72f8b9be321a7d6d8401ddffb96aaad684ab3d6bda',
         ],
 
     ],
