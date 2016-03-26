@@ -46,7 +46,7 @@ class DestroyAll extends Command
         try {
             $allDroplets = DigitalOcean::droplet()->getAll();
         } catch (Exception $e) {
-            $this->error($now . 'Error fetching droplets: ' . $e->getMessage());
+            $this->error($now . ' : Error fetching droplets: ' . $e->getMessage());
         }
 
         // delete droplets prefixed with "servman-"
@@ -57,9 +57,9 @@ class DestroyAll extends Command
                 // Destroy droplet by $dropletId
                 try {
                     DigitalOcean::droplet()->delete($id);
-                    $this->info($now . 'Destroying droplet ' . $id);
+                    $this->info($now . ' : Destroying droplet ' . $id);
                 } catch (Exception $e) {
-                    $this->error($now . 'Error destroying droplet ' . $id . ': ' . $e->getMessage());
+                    $this->error($now . ' : Error destroying droplet ' . $id . ': ' . $e->getMessage());
                 }
 
             }
